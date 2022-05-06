@@ -18,6 +18,7 @@ public class People {
     private String is_deleted;
     private String created_by;
     private String created_date;
-    private String update_date;
+    private String updated_date;
+    private String updated_by;
 }
 
