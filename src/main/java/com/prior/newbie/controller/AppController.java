@@ -30,7 +30,7 @@ public class AppController {
 //        return users;
 //    }
     @GetMapping(value = "/{cid}")
-    public Optional<People> showWithPath(@PathVariable String cid) {
+    public People showWithPath(@PathVariable String cid) {
         return peopleService.showWithPath(cid);
     }
 }

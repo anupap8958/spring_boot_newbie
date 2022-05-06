@@ -12,11 +12,10 @@ import java.util.Optional;
 public class PeopleService {
     @Autowired
     private PeopleRepository peopleRepository;
-    public Optional<People> showWithPath(String cid) {
-        Optional<People> user = peopleRepository.findById((cid));
+    public People showWithPath(String cid) {
+        Optional<People> user = peopleRepository.findById(cid);
         System.out.println("############### Find User By ID (In Console)###############");
         System.out.println(user.get());
-        return user;
+        return user.get();
     }
-
 }
