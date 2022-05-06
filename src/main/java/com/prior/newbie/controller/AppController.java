@@ -1,16 +1,20 @@
 package com.prior.newbie.controller;
 
-import com.prior.newbie.repository.PeopleRepository;
+import com.prior.newbie.entities.People;
+import com.prior.newbie.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/demo")
 public class AppController {
     @Autowired
-    private PeopleRepository peopleRepository;
+    private PeopleService peopleService;
 
     @GetMapping(value = "/hello")
     public String hello() {
@@ -25,4 +29,8 @@ public class AppController {
 //        System.out.println(users);
 //        return users;
 //    }
+    @GetMapping(value = "/{cid}")
+    public Optional<People> showWithPath(@PathVariable String cid) {
+        return peopleService.showWithPath(cid);
+    }
 }

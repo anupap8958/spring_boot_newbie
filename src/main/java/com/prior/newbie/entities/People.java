@@ -15,7 +15,7 @@ public class People {
     private String mobile;
     private String gender;
     private String birth_date;
-    private char is_deleted;
+    private String is_deleted;
     private String created_by;
     private String created_date;
     private String update_date;
