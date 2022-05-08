@@ -15,22 +15,13 @@ import java.util.Optional;
 public class AppController {
     @Autowired
     private PeopleService peopleService;
-
     @GetMapping(value = "/hello")
     public String hello() {
         return "Hello";
     }
 
-//    @GetMapping(path="/all")
-//    @ResponseBody
-//    public Collection<People> findAll() {
-//        System.out.println("cc");
-//        List<People> users = (List<People>) peopleRepository.findAll();
-//        System.out.println(users);
-//        return users;
-//    }
     @GetMapping(value = "/{cid}")
-    public People showWithPath(@PathVariable String cid) {
-        return peopleService.showWithPath(cid);
+    public People findById(@PathVariable String cid) {
+        return peopleService.findById(cid).get();
     }
 }
