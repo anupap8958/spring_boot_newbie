@@ -15,7 +15,7 @@ public class AdminController {
     @Autowired
     private PeopleService peopleService;
 
-    @PostMapping(value = "/create") ///ได้แต่ generate key (cid) เองไม่ได้ต้องกำหนดไปด้วย
+    @PostMapping(value = "/create")
     public People create(@RequestBody Map<String, String> inputs) throws Exception {
         //Saving data
         return peopleService.create(inputs);
