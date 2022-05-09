@@ -36,7 +36,7 @@ public class People {
     private String birth_date;
 
     @Column(name = "is_deleted")
-    private String is_deleted;
+    private String is_deleted = "N";
 
     @Column(name = "created_by")
     private String created_by;

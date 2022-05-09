@@ -48,7 +48,7 @@ public class AdminController {
         return peopleService.findAll();
     }
 
-    // don't use
+    /*
     @DeleteMapping(value = "/delete/{cid}")
     public String delete(@PathVariable String cid) {
         Optional<People> user = peopleService.findById(cid);
@@ -59,4 +59,5 @@ public class AdminController {
             return peopleService.delete(cid);
         }
     }
+    */
 }
