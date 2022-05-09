@@ -16,7 +16,7 @@ public class AdminController {
     private PeopleService peopleService;
 
     @PostMapping(value = "/create")
-    public People create(@RequestBody Map<String, String> inputs) throws Exception {
+    public People create(@RequestBody People inputs) throws Exception {
         //Saving data
         return peopleService.create(inputs);
     }
