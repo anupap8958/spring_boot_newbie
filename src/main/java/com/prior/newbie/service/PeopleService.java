@@ -44,17 +44,17 @@ public class PeopleService {
 
     public String update(String cid, Map<String, String> inputs) {
         People user = peopleRepository.getById(cid);
-        user.setTitle(inputs.get("title"));
-        user.setFirstname(inputs.get("firstname"));
-        user.setLastname(inputs.get("lastname"));
-        user.setMiddle_name(inputs.get("middle_name"));
-        user.setMobile(inputs.get("mobile"));
-        user.setGender(inputs.get("gender"));
-        user.setBirth_date(inputs.get("birth_date"));
+        user.setTitle(inputs.containsKey("title") ? inputs.get("title") : user.getTitle());
+        user.setFirstname(inputs.containsKey("firstname") ? inputs.get("firstname") : user.getFirstname());
+        user.setLastname(inputs.containsKey("lastname") ? inputs.get("lastname") : user.getLastname());
+        user.setMiddle_name(inputs.containsKey("middle_name") ? inputs.get("middle_name") : user.getMiddle_name());
+        user.setMobile(inputs.containsKey("mobile") ? inputs.get("mobile") : user.getMobile());
+        user.setGender(inputs.containsKey("gender") ? inputs.get("gender") : user.getGender());
+        user.setBirth_date(inputs.containsKey("birth_date") ? inputs.get("birth_date") : user.getBirth_date());
         user.setUpdated_date(new Date().toString());
-        user.setUpdated_by(inputs.get("updated_by"));
+        user.setUpdated_by(inputs.containsKey("updated_by") ? inputs.get("updated_by") : user.getUpdated_by());
         user.setUpdate_date(new Date().toString());
-        user.setUpdate_by(inputs.get("update_by"));
+        user.setUpdate_by(inputs.containsKey("update_by") ? inputs.get("update_by") : user.getUpdate_by());
 
         System.out.println(user);
 

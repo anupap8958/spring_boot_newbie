@@ -11,10 +11,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Slf4j
-public class JdbcRepository {
+public class JdbcCustomRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -23,11 +24,11 @@ public class JdbcRepository {
         return jdbcTemplate.query(sql, new Object[]{}, new BeanPropertyRowMapper<People>(People.class));
     }
 
-    public List<People> getPeopleById(String cid) {
+    public People getPeopleById(String cid) {
         String sql = "SELECT * FROM PEOPLE WHERE cid = ?";
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("cid", cid);
         log.info(sql);
-        return jdbcTemplate.query(sql, new Object[]{cid}, new BeanPropertyRowMapper<People>(People.class));
+        return (People) jdbcTemplate.queryForObject(sql, new Object[]{cid}, new BeanPropertyRowMapper(People.class));
     }
 
     public List<People> getPeopleIs_deleated() {
@@ -41,7 +42,7 @@ public class JdbcRepository {
         int result = 0;
         try {
             sql = new StringBuilder();
-            sql.append(" INSERT INTO PEOPLE (CID,TITLE, FIRSTNAME, LASTNAME, MIDDLE_NAME, MOBILE, GENDER, BIRTH_DATE, IS_DELETED, CREATED_BY, CREATED_DATE, UPDATED_DATE, UPDATED_BY, UPDATE_DATE, UPDATE_BY)");
+            sql.append(" INSERT INTO PEOPLE (CID, TITLE, FIRSTNAME, LASTNAME, MIDDLE_NAME, MOBILE, GENDER, BIRTH_DATE, IS_DELETED, CREATED_BY, CREATED_DATE, UPDATED_DATE, UPDATED_BY, UPDATE_DATE, UPDATE_BY)");
             sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)   \r\n");
 
             if (log.isInfoEnabled()) {
@@ -87,7 +88,7 @@ public class JdbcRepository {
         return result;
     }
 
-    public int update(String cid, People user) {
+    public int update(String cid, Map<String, String> inputs) {
         StringBuilder sql = new StringBuilder();
         int result = 0;
 
@@ -99,6 +100,21 @@ public class JdbcRepository {
             log.info("sql: {}", sql.toString());
         }
 
+        // update value
+        People user = (People) jdbcTemplate.queryForObject("SELECT * FROM PEOPLE WHERE cid = ?", new Object[]{cid}, new BeanPropertyRowMapper(People.class));
+        user.setTitle(inputs.containsKey("title") ? inputs.get("title") : user.getTitle());
+        user.setFirstname(inputs.containsKey("firstname") ? inputs.get("firstname") : user.getFirstname());
+        user.setLastname(inputs.containsKey("lastname") ? inputs.get("lastname") : user.getLastname());
+        user.setMiddle_name(inputs.containsKey("middle_name") ? inputs.get("middle_name") : user.getMiddle_name());
+        user.setMobile(inputs.containsKey("mobile") ? inputs.get("mobile") : user.getMobile());
+        user.setGender(inputs.containsKey("gender") ? inputs.get("gender") : user.getGender());
+        user.setBirth_date(inputs.containsKey("birth_date") ? inputs.get("birth_date") : user.getBirth_date());
+        user.setUpdated_date(new Date().toString());
+        user.setUpdated_by(inputs.containsKey("updated_by") ? inputs.get("updated_by") : user.getUpdated_by());
+        user.setUpdate_date(new Date().toString());
+        user.setUpdate_by(inputs.containsKey("update_by") ? inputs.get("update_by") : user.getUpdate_by());
+
+        // update to database
         result = jdbcTemplate.update(sql.toString(), new Object[]{
                 user.getTitle(), user.getFirstname(), user.getLastname(), user.getMiddle_name(), user.getMobile(),
                 user.getGender(), user.getBirth_date(), new Date().toString(), user.getUpdated_by(), new Date().toString(), user.getUpdate_by(), cid
