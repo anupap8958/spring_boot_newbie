@@ -33,7 +33,6 @@ public class PeopleService {
         }
     }
 
-
     public String deleteUser(String cid) { // N -> Y
         People user = peopleRepository.getById(cid);
         user.setIs_deleted("Y");
