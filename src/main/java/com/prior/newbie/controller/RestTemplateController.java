@@ -1,11 +1,13 @@
 package com.prior.newbie.controller;
 
 import com.prior.newbie.entities.Train;
+import com.prior.newbie.entities.TrainV2;
 import com.prior.newbie.service.RestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,7 +18,7 @@ public class RestTemplateController {
     private RestTemplateService restTemplateService;
 
     @GetMapping("/findAll")
-    public ResponseEntity<String> getAllUser() {
+    public List<TrainV2> getAllUser() {
         return restTemplateService.getAllUser();
     }
 
